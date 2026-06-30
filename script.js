@@ -16,47 +16,57 @@ if (storedTheme) {
   applyTheme(prefersDark ? 'dark' : 'light');
 }
 
-themeToggle.addEventListener('click', () => {
-  const nextTheme = body.classList.contains('dark') ? 'light' : 'dark';
-  applyTheme(nextTheme);
-});
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const nextTheme = body.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(nextTheme);
+  });
+}
 
-navToggle.addEventListener('click', () => {
-  nav.classList.toggle('open');
-});
+if (navToggle && nav) {
+  navToggle.addEventListener('click', () => {
+    nav.classList.toggle('open');
+  });
+}
 
 const revealElements = document.querySelectorAll('.content-reveal, .visual-reveal, .animate-up');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
+if (revealElements.length) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
   });
-}, {
-  threshold: 0.15,
-});
 
-revealElements.forEach((element) => observer.observe(element));
+  revealElements.forEach((element) => observer.observe(element));
+}
 
 const progressBars = document.querySelectorAll('.skill-bar__fill');
-const progressObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      const progress = entry.target.dataset.progress;
-      entry.target.style.width = `${progress}%`;
-      progressObserver.unobserve(entry.target);
-    }
+if (progressBars.length) {
+  const progressObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const progress = entry.target.dataset.progress;
+        entry.target.style.width = `${progress}%`;
+        progressObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.3,
   });
-}, {
-  threshold: 0.3,
-});
 
-progressBars.forEach((bar) => progressObserver.observe(bar));
+  progressBars.forEach((bar) => progressObserver.observe(bar));
+}
 
 const navLinks = document.querySelectorAll('.nav a');
-navLinks.forEach((link) => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
+if (navLinks.length && nav) {
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('open');
+    });
   });
-});
+}
